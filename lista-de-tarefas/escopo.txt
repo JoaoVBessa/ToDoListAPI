@@ -1,0 +1,19 @@
+API RESTFul to-do list
+
+MODELO
+To-Do - List
+- Título
+- Horário
+- Data
+- Observação
+- Código
+
+CONTROLLER 
+
+
+SERVICE 
+obterTodos, obterPorCod, atulizar, deletar, criar.
+
+REPOSITORY
+obterTodos, obterPorCod, atulizar, deletar, criar.
+

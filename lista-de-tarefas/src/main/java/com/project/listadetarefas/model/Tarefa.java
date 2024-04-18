@@ -3,12 +3,20 @@ package com.project.listadetarefas.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 /**
  * Representa o MODEL da lista de tarefas.
  */
-public class ToDoList {
+@Entity
+public class Tarefa {
  
-    private Integer codigo;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
     private String observacao;
 
@@ -18,24 +26,41 @@ public class ToDoList {
 
     private String titulo;
 
+    
+    /**
+     * Construtor da Tarefa.
+     * @param id
+     * @param observacao
+     * @param hora
+     * @param dia
+     * @param titulo
+     */
+    public Tarefa(Integer id, String observacao, LocalTime hora, LocalDate dia, String titulo) {
+        this.id = id;
+        this.observacao = observacao;
+        this.hora = hora;
+        this.dia = dia;
+        this.titulo = titulo;
+    }
+
     //#region Getters and Setters
     /**
      * Obtém o código da tarefa.
      * @return O cógido da tarefa.
      */
-    public Integer getCodigo() {
-        return codigo;
+    public Integer getId() {
+        return id;
     }
 
     /**
      * Define o código da tarefa.
      * @param codigo O novo código da tarefa.
      */
-    public void setCodigo(Integer codigo) {
+    public void setId(Integer codigo) {
         if(codigo < 0){
-            throw new IllegalArgumentException("O código não pode ser negativo");
+            throw new IllegalArgumentException("O id não pode ser negativo");
         }
-        this.codigo = codigo;
+        this.id = codigo;
     }
 
     /**

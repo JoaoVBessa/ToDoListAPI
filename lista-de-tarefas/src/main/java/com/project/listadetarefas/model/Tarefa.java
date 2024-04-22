@@ -3,6 +3,8 @@ package com.project.listadetarefas.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,27 +22,32 @@ public class Tarefa {
 
     private String observacao;
 
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime hora;
 
-    private LocalDate dia;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate data;
 
     private String titulo;
 
-    
     /**
      * Construtor da Tarefa.
-     * @param id
+     */
+    public Tarefa() {
+        this.data = LocalDate.now();
+        this.hora = LocalTime.now();
+    }
+
+    /**
+     * Construtor da Tarefa com parâmetros.
      * @param observacao
-     * @param hora
-     * @param dia
      * @param titulo
      */
-    public Tarefa(Integer id, String observacao, LocalTime hora, LocalDate dia, String titulo) {
-        this.id = id;
-        this.observacao = observacao;
-        this.hora = hora;
-        this.dia = dia;
+    public Tarefa(String titulo, String observacao) {
         this.titulo = titulo;
+        this.observacao = observacao;
+        this.data = LocalDate.now();
+        this.hora = LocalTime.now();
     }
 
     //#region Getters and Setters
@@ -99,16 +106,16 @@ public class Tarefa {
      * Obtém o dia da tarefa.
      * @return O dia da tarefa.
      */
-    public LocalDate getDia() {
-        return dia;
+    public LocalDate getData() {
+        return data;
     }
 
     /**
      * Define o dia da tarefa.
      * @param dia O novo dia da tarefa.
      */
-    public void setDia(LocalDate dia) {
-        this.dia = dia;
+    public void setData(LocalDate dia) {
+        this.data = dia;
     }
 
     /**

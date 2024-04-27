@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.project.listadetarefas.dto.TarefaDTO;
@@ -37,9 +38,10 @@ public class TarefaService {
         return modelMapper.map(tarefaSalva, TarefaDTO.class);
     }
 
-    public TarefaDTO buscarPorId(Integer id){
-        Tarefa tarefa = tarefaRepository.findById(id).orElse(null);
-        return tarefa != null ? modelMapper.map(tarefa, TarefaDTO.class) : null;
+    public TarefaDTO buscarPorId(Integer id) {
+        Tarefa tarefa = tarefaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Tarefa com o ID " + id + " não encontrada."));
+        return modelMapper.map(tarefa, TarefaDTO.class);
     }
 
     public TarefaDTO atualizarTarefa(Integer id, TarefaDTO tarefaAtualizada){
@@ -57,12 +59,13 @@ public class TarefaService {
     }
     
 
-    public boolean excluirTarefa(Integer id){
+    public ResponseEntity<Void> excluirTarefa(Integer id) {
         if (tarefaRepository.existsById(id)) {
             tarefaRepository.deleteById(id);
-            return true;
+            return ResponseEntity.noContent().build();
+        } else {
+            throw new ResourceNotFoundException("Tarefa com o ID " + id + " não encontrada.");
         }
-        return false; // Ou lançar uma exceção, dependendo do seu requisito
     }
 
 }
